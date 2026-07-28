@@ -68,23 +68,23 @@
         <!-- Navigation -->
         <nav class="border-b border-white/5 bg-black/20 backdrop-blur-md sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-20">
-                    <div class="flex items-center gap-3 cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-fuchsia-600 to-blue-600 flex items-center justify-center shadow-lg shadow-fuchsia-500/30">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class="flex justify-between items-center h-20 gap-2">
+                    <div class="flex items-center gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-fuchsia-600 to-blue-600 flex items-center justify-center shadow-lg shadow-fuchsia-500/30 flex-shrink-0">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
-                        <span class="font-black text-2xl tracking-tight">QUIZ<span class="text-fuchsia-500">ARENA</span></span>
+                        <span class="font-black text-lg sm:text-2xl tracking-tight hidden min-[380px]:block">QUIZ<span class="text-fuchsia-500">ARENA</span></span>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <button @click="joinModalOpen = true" class="px-5 py-2 rounded-full font-bold text-sm border-2 border-fuchsia-500 text-fuchsia-400 hover:bg-fuchsia-500 hover:text-white transition-all h-[44px] flex items-center justify-center">
-                            Gabung Room
+                    <div class="flex items-center gap-2 sm:gap-4">
+                        <button @click="joinModalOpen = true" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm border-2 border-fuchsia-500 text-fuchsia-400 hover:bg-fuchsia-500 hover:text-white transition-all h-[36px] sm:h-[44px] flex items-center justify-center whitespace-nowrap">
+                            Gabung<span class="hidden sm:inline">&nbsp;Room</span>
                         </button>
 
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="px-6 py-2 rounded-full font-semibold text-sm bg-white/10 hover:bg-white/20 transition-all border border-white/10 hover:border-white/30 backdrop-blur-md h-[44px] flex items-center justify-center">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold text-xs sm:text-sm bg-white/10 hover:bg-white/20 transition-all border border-white/10 hover:border-white/30 backdrop-blur-md h-[36px] sm:h-[44px] flex items-center justify-center">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="flex items-center font-semibold text-gray-300 hover:text-white transition-colors px-2 text-sm sm:text-base">Masuk</a>
-                            <a href="{{ route('register') }}" class="px-5 sm:px-6 py-2 rounded-full font-bold text-sm bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:from-fuchsia-500 hover:to-blue-500 shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95 h-[44px] flex items-center justify-center whitespace-nowrap">Daftar</a>
+                            <a href="{{ route('login') }}" class="flex items-center font-semibold text-gray-300 hover:text-white transition-colors px-1 sm:px-2 text-xs sm:text-base">Masuk</a>
+                            <a href="{{ route('register') }}" class="px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:from-fuchsia-500 hover:to-blue-500 shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95 h-[36px] sm:h-[44px] flex items-center justify-center whitespace-nowrap">Daftar</a>
                         @endauth
                     </div>
                 </div>

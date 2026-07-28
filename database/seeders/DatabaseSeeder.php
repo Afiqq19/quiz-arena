@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             QuizSeeder::class,
             AdditionalQuizzesSeeder::class,
+            ExtraQuizzesSeeder::class,
+            FinalQuizzesSeeder::class,
+            MixedQuizzesSeeder::class,
+            TenQuizzesSeeder::class,
         ]);
     }
 }

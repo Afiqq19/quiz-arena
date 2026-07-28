@@ -27,7 +27,7 @@ class DashboardController extends Controller
             });
         }
 
-        $quizzes = $quizzesQuery->latest()->paginate(12)->withQueryString();
+        $quizzes = $quizzesQuery->latest()->paginate(8)->withQueryString();
         
         // Fetch user's own created quizzes
         $myQuizzes = \App\Models\Quiz::withCount(['questions', 'attempts'])

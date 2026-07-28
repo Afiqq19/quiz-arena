@@ -6,17 +6,35 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
+        $search = $request->input('search');
+
         // Fetch only approved quizzes for the main catalog
-        $quizzes = \App\Models\Quiz::with('creator')->withCount(['questions', 'attempts'])->where('status', 'approved')->get();
+        $quizzesQuery = \App\Models\Quiz::with('creator')
+                            ->withCount(['questions', 'attempts'])
+                            ->where('status', 'approved');
+
+        if ($search) {
+            $quizzesQuery->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('category', 'like', "%{$search}%");
+            });
+        }
+
+        $quizzes = $quizzesQuery->latest()->paginate(12)->withQueryString();
         
         // Fetch user's own created quizzes
-        $myQuizzes = \App\Models\Quiz::withCount(['questions', 'attempts'])->where('created_by', auth()->id())->get();
+        $myQuizzes = \App\Models\Quiz::withCount(['questions', 'attempts'])
+                        ->where('created_by', auth()->id())
+                        ->latest()
+                        ->paginate(6, ['*'], 'my_page')
+                        ->withQueryString();
 
         $completedQuizIds = \App\Models\Attempt::where('user_id', auth()->id())
                                                ->pluck('quiz_id')

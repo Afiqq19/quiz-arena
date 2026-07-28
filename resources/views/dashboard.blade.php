@@ -70,25 +70,40 @@
                     </h3>
                     <p class="text-gray-400 text-sm mt-1">Pilih kuis di bawah ini dan uji kemampuanmu.</p>
                 </div>
-                <div class="flex flex-wrap gap-3 mt-4 sm:mt-0">
-                    <a href="{{ route('quizzes.create') }}" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold text-sm shadow-lg shadow-green-500/30 transition-all flex items-center gap-2 border border-green-400/50">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        Buat Kuis Baru
+                <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3 mt-4 sm:mt-0 w-full sm:w-auto">
+                    <a href="{{ route('quizzes.create') }}" class="px-2 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-green-500/30 transition-all flex items-center justify-center gap-1 sm:gap-2 border border-green-400/50 text-center">
+                        <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Buat Kuis
                     </a>
-                    <a href="{{ route('rooms.create') }}" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/30 transition-all flex items-center gap-2 border border-blue-400/50">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                        Buat Ruangan
+                    <a href="{{ route('rooms.create') }}" class="px-2 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-1 sm:gap-2 border border-blue-400/50 text-center">
+                        <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        Buat Room
                     </a>
-                    <a href="{{ route('rooms.joinForm') }}" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-bold text-sm shadow-lg shadow-fuchsia-500/30 transition-all flex items-center gap-2 border border-fuchsia-400/50">
-                        Gabung Room
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <a href="{{ route('rooms.joinForm') }}" class="px-2 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-fuchsia-500/30 transition-all flex items-center justify-center gap-1 sm:gap-2 border border-fuchsia-400/50 text-center">
+                        Gabung
+                        <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     </a>
-                    <a href="{{ route('quiz.history') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 hover:text-indigo-100 font-semibold text-sm transition-all flex items-center gap-2 border border-indigo-500/30">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Histori Saya
+                    <a href="{{ route('quiz.history') }}" class="px-2 sm:px-5 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 hover:text-indigo-100 font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-1 sm:gap-2 border border-indigo-500/30 text-center">
+                        <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Histori
                     </a>
                 </div>
             </div>
+
+            <!-- Search Bar -->
+            <form action="{{ route('dashboard') }}" method="GET" class="mb-8 relative max-w-2xl">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul kuis, kategori, atau deskripsi..." class="w-full pl-12 pr-10 py-3.5 bg-gray-900/60 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 backdrop-blur-md transition-all shadow-inner">
+                    @if(request('search'))
+                        <a href="{{ route('dashboard') }}" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </a>
+                    @endif
+                </div>
+            </form>
 
             <!-- Quiz Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -168,6 +183,10 @@
                         </div>
                     </div>
                 @endforelse
+            </div>
+            
+            <div class="mt-8">
+                {{ $quizzes->links() }}
             </div>
 
             <!-- Kuis Buatan Saya -->
@@ -254,6 +273,10 @@
                         </div>
                     </div>
                 @endforelse
+            </div>
+
+            <div class="mt-4">
+                {{ $myQuizzes->links() }}
             </div>
         </div>
     </div>

@@ -137,21 +137,24 @@
             </div>
         </div>
         
+        @php
+            $participantsData = $allParticipants->map(function($p) {
+                return [
+                    'id' => $p->id,
+                    'name' => $p->user_id ? $p->user->name : $p->guest_name . ' (Guest)',
+                    'status' => $p->status,
+                    'score' => $p->score,
+                    'room_streak' => $p->user_id ? $p->user->room_streak : 0
+                ];
+            });
+        @endphp
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.data('resultPolling', () => ({
                     roomId: '{{ $room->id }}',
                     myId: {{ $participant->id }},
                     roomStatus: '{{ $room->status }}',
-                    participants: @json($allParticipants->map(function($p) {
-                        return [
-                            'id' => $p->id,
-                            'name' => $p->user_id ? $p->user->name : $p->guest_name . ' (Guest)',
-                            'status' => $p->status,
-                            'score' => $p->score,
-                            'room_streak' => $p->user_id ? $p->user->room_streak : 0
-                        ];
-                    })),
+                    participants: @json($participantsData),
                     pollInterval: null,
                     
                     init() {

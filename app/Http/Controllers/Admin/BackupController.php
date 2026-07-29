@@ -11,10 +11,30 @@ class BackupController extends Controller
 {
     public function index()
     {
-        return view('admin.backup.index');
+        $backupDir = storage_path('app/backups');
+        if (!File::exists($backupDir)) {
+            File::makeDirectory($backupDir, 0755, true);
+        }
+
+        $files = File::files($backupDir);
+        $backups = [];
+        foreach ($files as $file) {
+            $backups[] = [
+                'name' => $file->getFilename(),
+                'size' => $file->getSize(),
+                'date' => $file->getMTime(),
+            ];
+        }
+
+        // Sort by date descending
+        usort($backups, function($a, $b) {
+            return $b['date'] <=> $a['date'];
+        });
+
+        return view('admin.backup.index', compact('backups'));
     }
 
-    public function download()
+    public function create()
     {
         // Pure PHP Database Dumper
         $tables = DB::select('SHOW TABLES');
@@ -54,12 +74,38 @@ class BackupController extends Controller
         
         $sql .= "SET FOREIGN_KEY_CHECKS=1;\n";
 
+        $backupDir = storage_path('app/backups');
+        if (!File::exists($backupDir)) {
+            File::makeDirectory($backupDir, 0755, true);
+        }
+
         $filename = 'quiz_arena_backup_' . now()->format('Y_m_d_His') . '.sql';
-        $path = storage_path('app/' . $filename);
+        $path = $backupDir . '/' . $filename;
         
         File::put($path, $sql);
 
-        return response()->download($path)->deleteFileAfterSend(true);
+        return redirect()->back()->with('status', 'Backup berhasil dibuat dan disimpan: ' . $filename);
+    }
+    
+    public function downloadFile($filename)
+    {
+        $path = storage_path('app/backups/' . $filename);
+        if (!File::exists($path)) {
+            return redirect()->back()->with('error', 'File backup tidak ditemukan.');
+        }
+        
+        return response()->download($path);
+    }
+    
+    public function deleteFile($filename)
+    {
+        $path = storage_path('app/backups/' . $filename);
+        if (File::exists($path)) {
+            File::delete($path);
+            return redirect()->back()->with('status', 'File backup ' . $filename . ' berhasil dihapus.');
+        }
+        
+        return redirect()->back()->with('error', 'File backup tidak ditemukan.');
     }
 
     public function restore(Request $request)

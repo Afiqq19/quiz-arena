@@ -62,7 +62,7 @@
                             </button>
                             
                             <button type="button" x-show="currentQuestionIndex === questions.length - 1" @click="submitQuiz()" class="inline-flex items-center px-6 py-3 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:outline-none focus:border-green-900 focus:ring ring-green-300 disabled:opacity-25 transition">
-                                Selesai & Kirim
+                                SELESAI
                             </button>
                         </div>
                     </div>
@@ -179,8 +179,20 @@
                     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
                 },
                 
+                syncProgress() {
+                    fetch('{{ route('rooms.sync', $room->id) }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ answers: this.answers })
+                    }).catch(e => {});
+                },
+                
                 nextQuestion() {
                     if (this.currentQuestionIndex < this.questions.length - 1) {
+                        this.syncProgress();
                         this.currentQuestionIndex++;
                         
                         let bgm = document.getElementById('bgMusic');

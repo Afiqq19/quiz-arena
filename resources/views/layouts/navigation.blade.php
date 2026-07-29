@@ -15,11 +15,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'border-fuchsia-500 text-white' : 'border-transparent text-gray-300 hover:text-white hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                        {{ __('Dasbor') }}
-                    </a>
-                    
                     @auth
+                        <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'border-fuchsia-500 text-white' : 'border-transparent text-gray-300 hover:text-white hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
+                            {{ __('Dasbor') }}
+                        </a>
+                    
                         @if(auth()->user()->role === 'admin')
                             <a href="{{ route('admin.leaderboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.leaderboard') ? 'border-fuchsia-500 text-white' : 'border-transparent text-gray-300 hover:text-white hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
                                 {{ __('Papan Peringkat') }}
@@ -44,10 +44,6 @@
                                 {{ __('Histori Kuis Saya') }}
                             </a>
                         @endif
-                    @else
-                        <a href="{{ route('leaderboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('leaderboard') ? 'border-fuchsia-500 text-white' : 'border-transparent text-gray-300 hover:text-white hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                            {{ __('Papan Peringkat') }}
-                        </a>
                     @endauth
                 </div>
             </div>
@@ -122,11 +118,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-900/95 backdrop-blur-md border-b border-gray-700">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard')" class="text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-white border-transparent">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            
             @auth
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard')" class="text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-white border-transparent">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            
                 @if(auth()->user()->role === 'admin')
                     <x-responsive-nav-link :href="route('admin.leaderboard')" :active="request()->routeIs('admin.leaderboard')" class="text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-white border-transparent">
                         {{ __('Papan Peringkat') }}
@@ -151,10 +147,6 @@
                         {{ __('Histori Kuis Saya') }}
                     </x-responsive-nav-link>
                 @endif
-            @else
-                <x-responsive-nav-link :href="route('leaderboard')" :active="request()->routeIs('leaderboard')" class="text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-white border-transparent">
-                    {{ __('Papan Peringkat') }}
-                </x-responsive-nav-link>
             @endauth
         </div>
 

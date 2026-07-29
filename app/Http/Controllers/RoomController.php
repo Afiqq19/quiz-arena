@@ -70,13 +70,15 @@ class RoomController extends Controller
         return redirect()->route('rooms.monitor', $room->id)->with('success', 'Room berhasil dibuat! Bagikan kode ini ke peserta.');
     }
 
-    // Monitor Room (Guru)
     public function monitor(Room $room)
     {
         if ($room->user_id !== auth()->id()) abort(403);
         $room->load('participants.user');
         
-        return view('rooms.monitor', compact('room'));
+        $quizzes = \App\Models\Quiz::all();
+        $selectedQuizzes = \App\Models\RoomQuiz::where('room_id', $room->id)->pluck('quiz_id')->toArray();
+        
+        return view('rooms.monitor', compact('room', 'quizzes', 'selectedQuizzes'));
     }
 
     public function startRoom(Room $room)
@@ -127,18 +129,28 @@ class RoomController extends Controller
         if ($room->status !== 'waiting') return back()->with('error', 'Tidak bisa mengubah pengaturan saat bermain.');
 
         $request->validate([
+            'title' => 'required|string|max:255',
+            'quizzes' => 'required|array',
             'timer_per_question' => 'required|integer|min:5',
             'total_questions' => 'required|integer|min:1',
         ]);
 
         $room->update([
+            'title' => $request->title,
             'timer_per_question' => $request->timer_per_question,
             'total_questions' => $request->total_questions,
         ]);
 
+        \App\Models\RoomQuiz::where('room_id', $room->id)->delete();
+        foreach ($request->quizzes as $quiz_id) {
+            \App\Models\RoomQuiz::create([
+                'room_id' => $room->id,
+                'quiz_id' => $quiz_id
+            ]);
+        }
+
         // Regenerate questions
-        $quizIds = \App\Models\RoomQuiz::where('room_id', $room->id)->pluck('quiz_id');
-        $questionIds = \App\Models\Question::whereIn('quiz_id', $quizIds)
+        $questionIds = \App\Models\Question::whereIn('quiz_id', $request->quizzes)
             ->inRandomOrder()
             ->limit($request->total_questions)
             ->pluck('id');
@@ -307,6 +319,10 @@ class RoomController extends Controller
             return redirect()->route('rooms.result', $room->id);
         }
 
+        if ($participant->status === 'joined') {
+            $participant->update(['status' => 'playing']);
+        }
+
         $questions = $room->roomQuestions()->with('question')->get()->map(function($rq) {
             $q = $rq->question;
             if ($q->question_type === 'essay') {
@@ -371,6 +387,35 @@ class RoomController extends Controller
         return response()->json([
             'redirect' => route('rooms.result', $room->id)
         ]);
+    }
+
+    public function syncProgress(Request $request, Room $room)
+    {
+        $participant = $this->getParticipant($room);
+        if (!$participant) return response()->json(['success' => false], 404);
+                                    
+        $answers = $request->input('answers', []);
+        $questions = $room->roomQuestions()->with('question')->get();
+        
+        $score = 0;
+        foreach($questions as $rq) {
+            $selected = $answers[$rq->question->id] ?? null;
+            if ($selected !== null && $selected !== '') {
+                if ($rq->question->question_type === 'essay') {
+                    $isCorrect = strtolower(trim($selected)) === strtolower(trim($rq->question->essay_answer));
+                } else {
+                    $isCorrect = ($selected === $rq->question->correct_option);
+                }
+                
+                if ($isCorrect) {
+                    $score += 10;
+                }
+            }
+        }
+        
+        $participant->update(['score' => $score]);
+
+        return response()->json(['success' => true, 'score' => $score]);
     }
 
     public function result(Room $room)

@@ -53,6 +53,7 @@ Route::get('/room/{room}/lobby', [\App\Http\Controllers\RoomController::class, '
 Route::get('/room/{room}/status', [\App\Http\Controllers\RoomController::class, 'checkStatus'])->name('rooms.status');
 Route::get('/room/{room}/play', [\App\Http\Controllers\RoomController::class, 'play'])->name('rooms.play');
 Route::post('/room/{room}/submit', [\App\Http\Controllers\RoomController::class, 'submit'])->name('rooms.submit');
+Route::post('/room/{room}/sync', [\App\Http\Controllers\RoomController::class, 'syncProgress'])->name('rooms.sync');
 Route::get('/room/{room}/result', [\App\Http\Controllers\RoomController::class, 'result'])->name('rooms.result');
 
 // Authenticated Routes
